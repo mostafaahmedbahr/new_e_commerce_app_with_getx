@@ -1,16 +1,26 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:new_e_commerce_app/models/facebook_model.dart';
 import 'package:new_e_commerce_app/routes/routes.dart';
 
 class AuthController extends GetxController{
+
+  @override
+  void onInit()
+  {
+    // signUpWithGoogle();
+  }
   bool isVisibility = false;
   bool isCheckBox = false;
-  var displayName = "";
-  var displayphoto = "";
+  var displayName = "".obs;
+  var displayEmail = "".obs;
+  var displayphoto = "".obs;
   var isSignIn = false;
+  FaceBookModel? faceBookModel;
   final GetStorage authStorage = GetStorage();
 
   void visibilityChange(){
@@ -34,8 +44,10 @@ class AuthController extends GetxController{
         email: email,
         password: password,
       ).then((value){
-        displayName = name;
+        displayName.value = name;
+        displayEmail.value = email;
         FirebaseAuth.instance.currentUser!.updateDisplayName(name);
+
         });
         update();
         Get.offNamed(Routes.mainscreen);
@@ -80,7 +92,8 @@ class AuthController extends GetxController{
           email:email,
           password: password,
       ).then((value){
-          displayName = FirebaseAuth.instance.currentUser!.displayName!;
+          displayName.value = FirebaseAuth.instance.currentUser!.displayName!;
+          displayEmail.value = FirebaseAuth.instance.currentUser!.email!;
         });
         isSignIn=true;
         authStorage.write("auth", isSignIn);
@@ -155,10 +168,16 @@ class AuthController extends GetxController{
   void signUpWithGoogle() async
   {
     try{
-      final GoogleSignInAccount?
-      googleUser = await GoogleSignIn().signIn();
-      displayName = googleUser!.displayName!;
-      displayphoto = googleUser.photoUrl!;
+      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+      displayName.value = googleUser!.displayName!;
+      displayEmail.value = googleUser.email;
+      displayphoto.value = googleUser.photoUrl!;
+      GoogleSignInAuthentication googleSignInAuthentication = await googleUser.authentication;
+      final AuthCredential credential = GoogleAuthProvider.credential(
+        accessToken:  googleSignInAuthentication.accessToken,
+        idToken: googleSignInAuthentication.idToken,
+      );
+      await FirebaseAuth.instance.signInWithCredential(credential);
       isSignIn=true;
       update();
       Get.offNamed(Routes.mainscreen);
@@ -175,14 +194,30 @@ class AuthController extends GetxController{
 
   }
 
+  void signUpWithFacebook()async
+  {
+    final LoginResult loginResult = await FacebookAuth.instance.login();
+    if(loginResult.status == LoginStatus.success )
+    {
+      var data =await FacebookAuth.instance.getUserData();
+      faceBookModel = FaceBookModel.fromJson(data);
+      print(faceBookModel?.name);
+      print("000000000000");
+      Get.offNamed(Routes.mainscreen);
+      update();
+    }
+
+
+  }
   void signOutFromApp()async
   {
     try
     {
       await FirebaseAuth.instance.signOut();
       await GoogleSignIn().signOut();
-      displayName = "";
-      displayphoto = "";
+      displayName.value = "";
+      displayphoto.value = "";
+      displayEmail.value = "";
       isSignIn=false;
       authStorage.remove("auth");
       update();

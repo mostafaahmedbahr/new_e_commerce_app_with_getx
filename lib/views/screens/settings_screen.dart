@@ -1,12 +1,13 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
+ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:new_e_commerce_app/logic/controllers/theme_controller.dart';
-import 'package:new_e_commerce_app/utils/theme.dart';
+  import 'package:new_e_commerce_app/utils/theme.dart';
+import 'package:new_e_commerce_app/views/widgets/Settings/dark_mode.dart';
+import 'package:new_e_commerce_app/views/widgets/Settings/language_widget.dart';
+import 'package:new_e_commerce_app/views/widgets/Settings/profile_widget.dart';
 import 'package:new_e_commerce_app/views/widgets/text.dart';
 
 import '../../logic/controllers/auth_controller.dart';
+import '../widgets/Settings/logout_widget.dart';
 class SettingsScreen extends StatelessWidget {
   final controller = Get.find<AuthController>();
 
@@ -17,7 +18,7 @@ class SettingsScreen extends StatelessWidget {
       body: ListView(
         padding:const EdgeInsets.all(24),
         children: [
-          // ProfileImage(),
+          ProfileWidget(),
           const SizedBox(height: 10,),
           Divider(
             color:Get.isDarkMode ? Colors.white :  Colors.grey,
@@ -25,19 +26,18 @@ class SettingsScreen extends StatelessWidget {
           ),
           const SizedBox(height: 20,),
            TextUtils(
-            text: "GENERAL",
+            text: "GENERAL".tr,
             underLine: TextDecoration.none,
             fontSize: 18,
             fontWeight: FontWeight.bold,
             color:Get.isDarkMode ? pinkClr : mainColor ,
-
         ),
           const SizedBox(height: 20,),
-          // DarkModeWidget(),
+          DarkModeWidget(),
           const SizedBox(height: 20,),
-          // LanguageWidget(),
+          LanguageWidget(),
           const SizedBox(height: 20,),
-          // LogOutScreen(),
+          LogOutWidget(),
 
         ],
       ),

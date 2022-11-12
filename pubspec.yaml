@@ -47,6 +47,10 @@ dependencies:
   flutter_simple_rating_bar: ^0.0.3
   flutter_rating_bar: ^4.0.0
   readmore: ^2.1.0
+  flutter_facebook_auth: ^5.0.6
+  geocoding: ^2.0.5
+  geolocator: ^9.0.2
+
 
 
 

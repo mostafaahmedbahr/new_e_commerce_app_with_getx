@@ -34,7 +34,7 @@ class CardItems extends StatelessWidget {
               controller.productList.length:
               controller.searchList.length,
             gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-              childAspectRatio: 0.8,
+              childAspectRatio: 0.7,
               mainAxisSpacing: 9.0,
               crossAxisSpacing: 6.0,
               maxCrossAxisExtent: 200,

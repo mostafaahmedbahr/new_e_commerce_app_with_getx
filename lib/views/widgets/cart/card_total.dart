@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:new_e_commerce_app/views/screens/payment_screen.dart';
 import 'package:new_e_commerce_app/views/widgets/auth/auth_button.dart';
 import 'package:new_e_commerce_app/views/widgets/text.dart';
 
@@ -13,7 +14,7 @@ class CardTotal extends StatelessWidget {
   Widget build(BuildContext context) {
     return Obx((){
       return Container(
-        padding: EdgeInsets.only(bottom: 30,left: 30),
+        padding:const EdgeInsets.only(bottom: 30,left: 30),
         child: Row(
           children: [
             Column(
@@ -26,7 +27,7 @@ class CardTotal extends StatelessWidget {
                   color:Get.isDarkMode?Colors.white : Colors.black,
                 ),
                 Text("\$ ${controller.total}",
-                  style: TextStyle(
+                  style:const TextStyle(
                     height: 1.5,
                     fontSize:25,
                     fontWeight: FontWeight.bold,
@@ -42,7 +43,9 @@ class CardTotal extends StatelessWidget {
                   child: AuthButton(
                     width: double.infinity,
                     text: "Check Out",
-                    onPressed: (){},
+                    onPressed: (){
+                      Get.to(()=>PaymentScreen());
+                    },
                   ),
                 ),
               ),

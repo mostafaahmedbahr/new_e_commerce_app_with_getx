@@ -7,6 +7,7 @@ import 'package:new_e_commerce_app/views/screens/auth/login_screen.dart';
 import 'package:new_e_commerce_app/views/screens/auth/signup_screen.dart';
 import 'package:new_e_commerce_app/views/screens/cart_screen.dart';
 import 'package:new_e_commerce_app/views/screens/main_screen.dart';
+import 'package:new_e_commerce_app/views/screens/payment_screen.dart';
 import 'package:new_e_commerce_app/views/screens/welcome_screen.dart';
 
 import '../logic/bindings/product_binding.dart';
@@ -39,6 +40,7 @@ static final routes = [
       bindings: [
         AuthBinding(),
         ProductBinding(),
+        MainBinding(),
       ],
   ),
 ];
@@ -52,6 +54,7 @@ class Routes
   static const forgetpasswordscreen = "/forgetPasswordScreen";
   static const mainscreen = "/mainScreen";
   static const cartscreen = "/CartScreen";
+  static const paymentScreen = "/paymentScreen";
 
 
 
